@@ -1,6 +1,10 @@
 package com.spring.features.Spring.Features.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
@@ -12,9 +16,15 @@ public class Product {
     private Long id;
 
     @Column
+    @NotEmpty(message = "Cant be empty")
+    @NotBlank(message = "Cant be blank")
+    @Min(value = 4)
+    @Max(value = 255)
     private String name;
 
     @Column
+    @Min(value = 0)
+    @Max(value = 1000)
     private Integer qtd;
 
     @Column

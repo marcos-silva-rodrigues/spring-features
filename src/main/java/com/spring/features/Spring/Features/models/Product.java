@@ -1,10 +1,7 @@
 package com.spring.features.Spring.Features.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
@@ -18,8 +15,7 @@ public class Product {
     @Column
     @NotEmpty(message = "Cant be empty")
     @NotBlank(message = "Cant be blank")
-    @Min(value = 4)
-    @Max(value = 255)
+    @Size(min = 4, max = 255)
     private String name;
 
     @Column
@@ -36,6 +32,13 @@ public class Product {
     public Product(String name, Integer qtd) {
         this.name = name;
         this.qtd = qtd;
+    }
+
+    @PrePersist
+    public void onPrePersist() {
+        if (this.createdAt == null) {
+            this.createdAt = new Date();
+        }
     }
 
     public Long getId() {

@@ -26,14 +26,16 @@ public class ProductResource {
 
     @GetMapping
     @ResponseBody
-    public List<Product> findAll() {
-        return this.productService.findAll();
+    public ResponseEntity<?> findAll() {
+        List<Product> list = this.productService.findAll();
+        return new ResponseEntity<List<Product>>(list, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Optional<Product> find(@PathVariable("id") Long id) {
-        return this.productService.find(id);
+    public ResponseEntity<?> find(@PathVariable("id") Long id) {
+        Optional<Product> product = this.productService.find(id);
+        return new ResponseEntity<Optional<Product>>(product, HttpStatus.OK);
     }
 
     @PostMapping
@@ -68,8 +70,9 @@ public class ProductResource {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") Long id) {
+    public ResponseEntity delete(@PathVariable("id") Long id) {
         this.productService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
